@@ -11,6 +11,7 @@ function indent() {
   esac
 }
 
+BUILD_DIR=$1
 STRIPE_CLI_URL="https://github.com/stripe/stripe-cli/releases/download/v1.4.5/stripe_1.4.5_linux_x86_64.tar.gz"
 
 echo "-----> Installing Stripe CLI"
