@@ -14,5 +14,8 @@ function indent() {
 STRIPE_CLI_URL="https://github.com/stripe/stripe-cli/releases/download/v1.4.5/stripe_1.4.5_linux_x86_64.tar.gz"
 
 echo "-----> Installing Stripe CLI"
-cd /app/bin
+mkdir -p $BUILD_DIR/.stripe
+cd $BUILD_DIR/.stripe
 curl -L "$STRIPE_CLI_URL" | tar zx |& indent
+export PATH="$BUILD_DIR/.stripe:$PATH"
+echo "Created stripe command in $BUILD_DIR/.stripe"
