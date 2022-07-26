@@ -12,17 +12,18 @@ function indent() {
 }
 
 BUILD_DIR=$1
-STRIPE_CLI_URL="https://github.com/stripe/stripe-cli/releases/download/v1.4.5/stripe_1.4.5_linux_x86_64.tar.gz"
+VERSION=${STRIPE_CLI_VERSION:-1.10.3}
+STRIPE_CLI_URL="https://github.com/stripe/stripe-cli/releases/download/v${VERSION}/stripe_${VERSION}_linux_x86_64.tar.gz"
 
-echo "-----> Installing Stripe CLI"
-mkdir -p $BUILD_DIR/.stripecli
-cd $BUILD_DIR/.stripecli
-curl -L "$STRIPE_CLI_URL" | tar zx |& indent
+echo "-----> Installing Stripe CLI $VERSION"
+mkdir -p "$BUILD_DIR"/.stripecli
+cd "$BUILD_DIR"/.stripecli
+curl -L --no-progress-meter "$STRIPE_CLI_URL" | tar zx |& indent
 
 # Add the contents of `.stripecli` to $PATH by adding a bash script that sets
 # that path to .profile.d. All of the contents of this directory are loaded for
 # new shells.
-mkdir -p $BUILD_DIR/.profile.d
+mkdir -p "$BUILD_DIR"/.profile.d
 cat > "$BUILD_DIR/.profile.d/stripecli.sh" <<'PROFILE'
 export PATH="$HOME/.stripecli:$PATH"
 PROFILE
